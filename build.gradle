@@ -1,0 +1,48 @@
+buildscript{
+    ext{
+        springBootVersion = '2.1.9.RELEASE'
+    }
+    repositories{
+        mavenCentral()
+        jcenter()
+    }
+    dependencies{
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+//plugins {
+//    id 'java'
+//}
+
+//스프링부트를 사용하기 위해 사용하는 필수 플러그인
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management' // 스프링부트 의존성들을 관리해주는 플러그인
+
+
+group 'com,jojoldu.book'
+version '1.0-SNAPSHOT'
+
+//의존성(라이브러리)들을 어떤 원격 저장소에서 받을지 정한다.
+repositories {
+    mavenCentral()
+    jcenter()
+    //mavenCentral은 이전부터 많이 사용하는 저장소이지만, 본인이 만든 라이브러리를 업로드하기위해서는 정말 많은 과정과 설정이 필요.
+    //jcenter는 이런 문제점을 개선. 라이브러리 업로드를 간단하게 한다.
+    //또한 mavenCentral에도 업로드될 수 있도록 자동화 할 수 있다.
+}
+
+//dependencies : 프로젝트 개발에 필요한 의존성들을 선언하는 곳
+//인텔리J는 메이븐저장소의 데이터를 인덱싱해서 관리하기때문에 커뮤니티 버전을 사용해도 의존성 자동완성이 가능.
+//버전명시를 하지 않아야만 맨 위에 작성한 "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"의 버전을 따라간다.
+//이렇게 관리할 경우 각 라이브러리들의 버전관리가 한곳에 집중되고, 버전 충돌문제도 해결된다.
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
